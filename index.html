@@ -3,15 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Calculator</title>
-    <script
-      src="https://code.jquery.com/jquery-2.2.4.min.js"
-      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-      crossorigin="anonymous">
-    </script>
     <link rel="stylesheet" href="css/jquery-ui.css">
   </head>
   <body>
-
+    <div id="calc"></div>
+    <script src="js/jquery.min.js" charset="utf-8"></script>
+    <script src="js/jquery.ui.core.js" charset="utf-8"></script>
+    <script src="js/jquery.ui.widget.js" charset="utf-8"></script>
+    <script src="js/jquery.ui.button.js" charset="utf-8"></script>
     <script src="js/jquery.frenzy.ui.calculator.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('#calc').calculator();
+      });
+    </script>
   </body>
 </html>
