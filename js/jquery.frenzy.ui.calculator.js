@@ -27,7 +27,13 @@
   $.widget('frenzy.calculator', {
     version: '0.0.1',
     options: {
-      buttons: buttons
+      buttons: buttons,
+      showOnCreate: false,
+      show: false,
+      hide: false,
+      beforeAddButtons: null,
+      shown: null,
+      hidden: null
     },
 
     _create: function () {
@@ -39,11 +45,19 @@
 
     _createWrapper: function () {
       var el = $('<div/>'),
+        widget = this,
         displays;
+
         this.shell = el.clone().addClass('dw-calculator-shell');
         displays = el.clone().addClass('dw-calculator-displays').appendTo(this.shell);
         el.clone().addClass('dw-calculator-calculation').appendTo(displays);
         el.clone().addClass('dw-calculator-display').appendTo(displays);
+
+        if (!this.options.showOnCreate) {
+          this._hide(this.element, this.options.hide, function() {
+            widget._trigger('hidden');
+          });
+        }
     },
 
     _createButtons: function () {
@@ -52,10 +66,13 @@
         widget = this;
 
       $.each(this.options.buttons, function(i, button) {
-        var btn = el.clone().text(button.label).appendTo(container).button();
-        if (!!button.classname) {
-          btn.addClass(button.classname);
+        if (widget._trigger('beforeAddButton', null, button)) {
+          var btn = el.clone().text(button.label).appendTo(container).button();
+          if (!!button.classname) {
+            btn.addClass(button.classname);
+          }
         }
+
       });
 
       container.appendTo(this.shell);
@@ -84,6 +101,13 @@
     _destroy: function () {
       this.element.removeClass('dw-calculator');
       this.element.empty();
+    },
+
+    show: function () {
+      var widget = this;
+      this._show(this.element, this.options.show, function () {
+        widget._trigger('shown');
+      });
     }
   });
 

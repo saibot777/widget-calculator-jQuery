@@ -12,6 +12,7 @@
       <button type="button" id="change">Change!</button>
       <button type="button" id="disable">Disable!</button>
       <button type="button" id="enable">Enable!</button>
+      <button type="button" id="show">Show!</button>
     </div>
 
     <script src="js/jquery.min.js" charset="utf-8"></script>
@@ -21,7 +22,17 @@
     <script src="js/jquery.frenzy.ui.calculator.js" charset="utf-8"></script>
     <script type="text/javascript">
       $(function() {
-        $('#calc').calculator();
+        $('#calc').calculator({
+          showOnCreate: true,
+          beforeAddButton: function (e, ui) {
+            if (ui.label === 'MR' || ui.label === 'MS' || ui.label === 'MC') {
+              return false;
+            }
+          },
+          shown: function (e) {
+            console.log('Shown!');
+          }
+        });
 
         $('#change').click(function() {
           $('#calc').calculator('option', 'buttons', [{ label: 'Test' }]);
@@ -33,6 +44,10 @@
 
         $('#enable').click(function() {
           $('#calc').calculator('option', 'disabled', false);
+        });
+
+        $('#show').click(function() {
+          $('#calc').calculator('show');
         });
       });
     </script>
