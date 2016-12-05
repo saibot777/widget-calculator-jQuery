@@ -26,6 +26,9 @@
 
   $.widget('frenzy.calculator', {
     version: '0.0.1',
+    options: {
+      buttons: buttons
+    },
 
     _create: function () {
       this.element.addClass('dw-calculator');
@@ -48,7 +51,7 @@
         container = $('<div/>').addClass('ui-helper-clearfix'),
         widget = this;
 
-      $.each(buttons, function(i, button) {
+      $.each(this.options.buttons, function(i, button) {
         var btn = el.clone().text(button.label).appendTo(container).button();
         if (!!button.classname) {
           btn.addClass(button.classname);
@@ -60,6 +63,27 @@
 
     _renderMarkup: function () {
       this.shell.appendTo(this.element);
+    },
+
+    _setOptions: function (options) {
+      this._superApply(arguments);
+    },
+
+    _setOption: function(key, val) {
+      this._super(key, val);
+
+      if (key === 'buttons') {
+        this.shell.find('button').remove();
+        this._createButtons();
+        this.renderMarkup();
+      } else if (key === 'disabled') {
+        this.shell.find('button').button('option', key, val);
+      }
+    },
+
+    _destroy: function () {
+      this.element.removeClass('dw-calculator');
+      this.element.empty();
     }
   });
 

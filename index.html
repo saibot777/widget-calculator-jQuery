@@ -4,9 +4,16 @@
     <meta charset="utf-8">
     <title>Calculator</title>
     <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/frenzy.ui.css">
   </head>
   <body>
     <div id="calc"></div>
+    <div class="buttons">
+      <button type="button" id="change">Change!</button>
+      <button type="button" id="disable">Disable!</button>
+      <button type="button" id="enable">Enable!</button>
+    </div>
+
     <script src="js/jquery.min.js" charset="utf-8"></script>
     <script src="js/jquery.ui.core.js" charset="utf-8"></script>
     <script src="js/jquery.ui.widget.js" charset="utf-8"></script>
@@ -15,7 +22,22 @@
     <script type="text/javascript">
       $(function() {
         $('#calc').calculator();
+
+        $('#change').click(function() {
+          $('#calc').calculator('option', 'buttons', [{ label: 'Test' }]);
+        });
+
+        $('#disable').click(function() {
+          $('#calc').calculator('option', 'disabled', true);
+        });
+
+        $('#enable').click(function() {
+          $('#calc').calculator('option', 'disabled', false);
+        });
       });
     </script>
+    <footer style="margin-top:40px">
+      Created by <a target="_blank" href="https://github.com/saibot777">Stefan Trajkovic</a>
+    </footer>
   </body>
 </html>
